@@ -132,7 +132,7 @@ dmypy.json
 ReactMusicLibrary/ReactMusicLibrary/settings.py
 
 # dependencies
-/node_modules
+/eric-react-library/node_modules
 /.pnp
 .pnp.js
 
