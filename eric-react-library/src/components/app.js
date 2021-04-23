@@ -30,19 +30,26 @@ class App extends Component {
             <Song
                 key={song.id}
                 song={song}
+                delete = {() => this.deleteSong(song.id)}
             />
         )
     }
 
     async addNewSong(song){
         let response = await axios.post('http://127.0.0.1:8000/music/', song) 
-        console.log(response.response)
+        console.log(response.data)
         alert('song has been added')
         this.getAllSongs();
     }
     
+    async deleteSong(songID){
+        let response = await axios.delete(`http://127.0.0.1:8000/music/${songID}/`)
+        console.log(response.data)
+        alert('song has been deleted')
+        this.getAllSongs();
+    }
 
-    render () {
+        render () {
         return (
             <div>
                 <div className="container-fluid">
