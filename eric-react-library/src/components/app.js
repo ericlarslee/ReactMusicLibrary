@@ -5,28 +5,39 @@ import axios from 'axios';
 import Song from './Song/song.js';
 import SongTable from './Table/songTable.js';
 import SongCreator from './SongCreator/songCreator.js';
+import SearchBar from './SearchBar/searchBar';
 
 class App extends Component {
     state = {
-        songs: []
+        songs: [],
+        currentSongs: [],
+        filterTerm: '',
     }
 
     componentDidMount(){
         console.log('did mount');
         this.getAllSongs();
-        console.log(this.getAllSongs());
     }
 
     async getAllSongs(){
         let response = await axios.get('http://127.0.0.1:8000/music/')
         console.log(response.data)
         this.setState({
-            songs: response.data
-        })
+            songs: response.data,
+            currentSongs: this.state.songs
+            
+        });
     }
 
-    mapSongs(){
-        return this.state.songs.map(song =>
+    runApp(){
+        if(this.state.songs.length === 0){
+            this.getAllSongs();
+        }
+        this.filteredSearch()
+    }
+
+    mapSongs(entry){
+        return entry.map(song =>
             <Song
                 key={song.id}
                 song={song}
@@ -49,14 +60,21 @@ class App extends Component {
         this.getAllSongs();
     }
 
+    
+        
+
         render () {
+            this.runApp();
         return (
             <div>
                 <div className="container-fluid">
                     <TitleBar />
                 </div>
                 <div>
-                    <SongTable mapSongs={() => this.mapSongs()}/>
+                    <SearchBar keyword= {this.state.filterTerm}/>
+                </div>
+                <div>
+                    <SongTable mapSongs={() => this.mapSongs(this.state.currentSongs)}/>
                 </div>
                 <div>
                     <SongCreator addNewSong={this.addNewSong.bind(this)} />
