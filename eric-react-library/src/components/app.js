@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TitleBar from './TitleBar/titleBar';
+// import TitleBar from './TitleBar/titleBar';
 import './app.css';
 import axios from 'axios';
 import Song from './Song/song.js';
@@ -33,7 +33,7 @@ class App extends Component {
         if(this.state.songs.length === 0){
             this.getAllSongs();
         }
-        this.filteredSearch()
+        // this.filteredSearch();
     }
 
     mapSongs(entry){
@@ -67,8 +67,12 @@ class App extends Component {
             this.runApp();
         return (
             <div>
-                <div className="container-fluid">
-                    <TitleBar />
+                <div className="row row-spacer">
+                    <div className="col-md-12" style={{padding: 0}}>
+                        <div className='titlebar-nav'>
+                            <h1>React Music Library</h1>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <SearchBar keyword= {this.state.filterTerm}/>

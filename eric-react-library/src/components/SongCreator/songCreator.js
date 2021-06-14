@@ -48,10 +48,10 @@ class SongCreator extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className='row col-align'>
                         <div className='col-sm-2'>
-                            <label>Title:</label>
+                            <label>Comment:</label>
                             <input type='text' name='title' value={this.state.title}
                             onChange={this.handleChange} />
-                        </div>
+                        {/* </div>
                         <div className='col-sm-2'>
                             <label>Album:</label>
                             <input type='text' name='album' value={this.state.album}
@@ -70,7 +70,7 @@ class SongCreator extends Component {
                         <div className='col-sm-2'>
                             <label>Release Date:</label>
                             <input type='date' name='release_date' value={this.state.release_date}
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange} /> */}
                         </div>
                         <div className='col-sm-2'>
                             <input type='submit' value='Add' />

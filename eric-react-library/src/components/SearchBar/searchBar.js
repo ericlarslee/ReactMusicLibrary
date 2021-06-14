@@ -8,7 +8,7 @@ const SearchBar = ({keyword, setKeyword}) => {
         key='song'
         value={keyword}
         placeholder={'Search for a song'}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={() => setKeyword(keyword)}
         />
     );
 }
