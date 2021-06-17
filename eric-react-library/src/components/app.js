@@ -7,12 +7,15 @@ import SongTable from './Table/songTable.js';
 import SongCreator from './SongCreator/songCreator.js';
 import SearchBar from './SearchBar/searchBar';
 
+let styling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
+
 class App extends Component {
     state = {
         songs: [],
         currentSongs: [],
         filterTerm: '',
     }
+    this.handleChange = this.handleChange.bind(this);
 
     componentDidMount(){
         console.log('did mount');
@@ -36,14 +39,26 @@ class App extends Component {
         // this.filteredSearch();
     }
 
-    mapSongs(entry){
-        return entry.map(song =>
-            <Song
-                key={song.id}
-                song={song}
-                delete = {() => this.deleteSong(song.id)}
-            />
-        )
+    // mapSongs(){
+    //    let temp entry.filter()
+    //     return entry.map(song =>
+    //         <Song
+    //             key={song.id}
+    //             song={song}
+    //             delete = {() => this.deleteSong(song.id)}
+    //         />
+    //     )
+    // }
+
+    mapSongs(songs){
+        let tempSongs = songs.filter(song => song.title.includes(this.state.filterTerm) || song.album.includes(this.state.filterTerm) || song.artist.includes(this.state.filterTerm) || song.genre.includes(this.state.filterTerm) || song.release_date.includes(this.state.filterTerm));
+            return tempSongs.map(song =>
+                    <Song
+                        key={song.id}
+                        song={song}
+                        delete = {() => this.deleteSong(song.id)}
+                    />
+                )
     }
 
     async addNewSong(song){
@@ -53,18 +68,17 @@ class App extends Component {
         this.getAllSongs();
     }
     
-    async deleteSong(songID){
+    async function deleteSong(songID) {
         let response = await axios.delete(`http://127.0.0.1:8000/music/${songID}/`)
         console.log(response.data)
         alert('song has been deleted')
         this.getAllSongs();
     }
 
-    
-        
 
         render () {
             this.runApp();
+            this.mapSongs(this.state.currentSongs);
         return (
             <div>
                 <div className="row row-spacer">
@@ -75,7 +89,12 @@ class App extends Component {
                     </div>
                 </div>
                 <div>
-                    <SearchBar keyword= {this.state.filterTerm}/>
+                <input
+                    style={styling}
+                    value={this.state.filterTerm}
+                    placeholder={'Search for a song'}
+                    onChange={this.setState(this.state.filterTerm)}
+                />
                 </div>
                 <div>
                     <SongTable mapSongs={() => this.mapSongs(this.state.currentSongs)}/>
