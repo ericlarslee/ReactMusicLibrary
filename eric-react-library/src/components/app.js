@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 // import TitleBar from './TitleBar/titleBar';
 import './app.css';
 import axios from 'axios';
@@ -6,23 +6,16 @@ import Song from './Song/song.js';
 import SongTable from './Table/songTable.js';
 import SongCreator from './SongCreator/songCreator.js';
 import SearchBar from './SearchBar/searchBar';
+import { useState } from 'react';
 
 let styling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
 
-class App extends Component {
-    state = {
-        songs: [],
-        currentSongs: [],
-        filterTerm: '',
-    }
-    this.handleChange = this.handleChange.bind(this);
-
-    componentDidMount(){
-        console.log('did mount');
-        this.getAllSongs();
-    }
-
-    async getAllSongs(){
+const App = () => {
+    const [songs, setSongs] = useState([]);
+    const [filterTerm, setFilterTerm] = useState("");
+    
+    
+    const getAllSongs= async() => {
         let response = await axios.get('http://127.0.0.1:8000/music/')
         console.log(response.data)
         this.setState({
@@ -78,7 +71,6 @@ class App extends Component {
 
         render () {
             this.runApp();
-            this.mapSongs(this.state.currentSongs);
         return (
             <div>
                 <div className="row row-spacer">
