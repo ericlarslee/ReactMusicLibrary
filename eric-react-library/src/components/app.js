@@ -1,14 +1,19 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import './app.css';
 import Song from './Song/song.js';
 import SongTable from './Table/songTable.js';
-// import SongCreator from './SongCreator/songCreator';
 import SongForm from './SongForm';
 import { deleteSong, getAllSongs } from './services';
-
 // let styling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
 
 const App = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async() =>{
+        let songData = await getAllSongs();
+        console.log(songData)
+        setSongs(songData);
+    },);
+    
     const [songs, setSongs] = useState([]);
     const [filterTerm, setFilterTerm] = useState("");
     const [songForm, setSongForm] = SongForm({title: '', album: '', artist: '', genre: '', release_date: ''});
@@ -25,9 +30,7 @@ const App = () => {
             )
     }
 
-    useEffect(() =>{
-        getAllSongs();
-    },[])
+    
 
     return (
         <div>
@@ -39,22 +42,22 @@ const App = () => {
                 </div>
             </div>
             <div>
-            <input
+            <label>Search for a song!</label>
+            {/* <input
                 // style={styling}
                 value={filterTerm}
                 placeholder='Search for a song'
                 onChange={setFilterTerm(filterTerm)}
-            />
+            /> */}
             </div>
             <div>
-                <SongTable mapSongs={() => mapSongs(songs)}/>
+                 <SongTable mapSongs={() => mapSongs(songs)}/>
             </div>
-            <div>
+             <div>
                 
             </div>
         </div>
     );
 }
-
 
 export default App;
